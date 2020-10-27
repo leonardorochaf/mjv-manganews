@@ -25,7 +25,7 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <form class="form-inline my-2 my-lg-0" action="busca" method="get">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Procurar notícias" aria-label="Search" name="parametro">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Procurar notícias" aria-label="Search" name="parametro" required>
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Procurar</button>
                 </form>
             </div>

@@ -40,11 +40,11 @@ public class NoticiaDaoImpl implements NoticiaDao {
     public List<Noticia> buscarPorParametro(String parametro) {
         String sql = "SELECT n.id, n.titulo, n.corpo, n.dataLancamento, n.visualizacoes, n.urlImagem, a.id, a.nome " +
                 "FROM noticia AS n JOIN autor AS a ON n.autor_id = a.id " +
-                "WHERE n.titulo LIKE '%:parametro%' OR a.nome LIKE '%:parametro%' ORDER BY dataLancamento DESC";
+                "WHERE n.titulo LIKE :parametro OR a.nome LIKE :parametro ORDER BY dataLancamento DESC";
 
         MapSqlParameterSource param = new MapSqlParameterSource();
 
-        param.addValue("parametro", parametro);
+        param.addValue("parametro", "%" + parametro + "%");
 
         return template.query(sql, param, new NoticiaRowMapper());
     }
