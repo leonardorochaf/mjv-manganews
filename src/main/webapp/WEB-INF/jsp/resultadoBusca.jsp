@@ -34,7 +34,12 @@
 
     <main>
         <div class="container">
-            <h1 class="my-4">Resultados da busca</h1>
+            <c:if test="${noticiasResultado.isEmpty()}">
+                <h1 class="my-4">Nenhum resultado encontrado</h1>
+            </c:if>
+            <c:if test="${!noticiasResultado.isEmpty()}">
+                <h1 class="my-4">Resultados da busca</h1>
+            </c:if>
             <div class="row">
                 <c:forEach items="${noticiasResultado}" var="noticia">
                     <div class="col-sm-4">
