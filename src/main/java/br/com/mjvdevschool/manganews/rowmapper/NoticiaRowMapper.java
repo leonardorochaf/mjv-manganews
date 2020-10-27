@@ -1,7 +1,6 @@
 package br.com.mjvdevschool.manganews.rowmapper;
 
 import br.com.mjvdevschool.manganews.models.Autor;
-import br.com.mjvdevschool.manganews.models.Manga;
 import br.com.mjvdevschool.manganews.models.Noticia;
 import org.springframework.jdbc.core.RowMapper;
 
