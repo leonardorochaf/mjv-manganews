@@ -26,7 +26,6 @@ public class NoticiaController {
 
     @GetMapping("/busca")
     public String buscar(@RequestParam String parametro, ModelMap model) {
-        System.out.println(parametro);
         model.put("noticiasResultado", noticiaService.buscarPorParametro(parametro));
         return "resultadoBusca";
     }
