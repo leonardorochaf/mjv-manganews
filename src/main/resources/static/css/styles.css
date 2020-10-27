@@ -1,0 +1,52 @@
+body {
+    background-color: #1a1a1a;
+}
+
+nav.navbar {
+    background-color: #131313;
+    min-height: 80px;
+}
+
+.navbar-brand {
+    font-size: 25px !important;
+}
+
+h1 {
+    color: white;
+}
+
+.card {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: white;
+}
+
+.card .card-body {
+    padding: 1.25rem 0;
+}
+
+a {
+    text-decoration: none !important;
+    color: white;
+}
+
+a > h5.card-title:hover {
+    color: #ff0048;
+}
+
+a > span.card-subtitle-author {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+span.card-subtitle-date {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.card-text {
+    color: #d6d6d6;
+}
+
+
