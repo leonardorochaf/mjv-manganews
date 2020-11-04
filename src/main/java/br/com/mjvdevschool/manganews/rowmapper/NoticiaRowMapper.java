@@ -1,6 +1,6 @@
 package br.com.mjvdevschool.manganews.rowmapper;
 
-import br.com.mjvdevschool.manganews.models.Autor;
+import br.com.mjvdevschool.manganews.models.Usuario;
 import br.com.mjvdevschool.manganews.models.Noticia;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -20,12 +20,12 @@ public class NoticiaRowMapper implements RowMapper<Noticia> {
         noticia.setVisualizacoes(rs.getInt("visualizacoes"));
         noticia.setUrlImagem(rs.getString("urlImagem"));
 
-        Autor autor = new Autor();
+        Usuario usuario = new Usuario();
 
-        autor.setId(rs.getInt(7));
-        autor.setNome(rs.getString("nome"));
+        usuario.setId(rs.getInt(7));
+        usuario.setNome(rs.getString("nome"));
 
-        noticia.setAutor(autor);
+        noticia.setUsuario(usuario);
 
         return noticia;
     }

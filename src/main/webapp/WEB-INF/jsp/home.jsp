@@ -18,12 +18,20 @@
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark">
         <div class="container">
-            <a href="#" type="button" class="navbar-brand">MangáNews</a>
+            <a href="/cliente/noticias" type="button" class="navbar-brand">MangáNews</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/cliente/noticias">Notícias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cliente/meusmangas">Meus mangás</a>
+                    </li>
+                </ul>
                 <form class="form-inline my-2 my-lg-0" action="busca" method="get">
                     <input class="form-control mr-sm-2" type="search" placeholder="Procurar notícias" aria-label="Search" name="parametro" required>
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Procurar</button>
@@ -43,7 +51,7 @@
                             <div class="card-body">
                                 <a href="#"><h5 class="card-title">${noticia.titulo}</h5></a>
                                 <div class="mt-2 mb-2 card-subtitle">
-                                    <a href="#"><span class="card-subtitle-author">${noticia.autor.nome}</span></a>
+                                    <a href="#"><span class="card-subtitle-author">${noticia.usuario.nome}</span></a>
                                     <span class="card-subtitle-date"> - <fmt:formatDate value="${noticia.dataLançamento}" pattern="dd/MM/yyyy"></fmt:formatDate></span>
                                 </div>
                                 <p class="card-text">${noticia.corpo}</p>
@@ -62,7 +70,7 @@
                             <div class="card-body">
                                 <a href="#"><h5 class="card-title">${noticia.titulo}</h5></a>
                                 <div class="mt-2 mb-2 card-subtitle">
-                                    <a href="#"><span class="card-subtitle-author">${noticia.autor.nome}</span></a>
+                                    <a href="#"><span class="card-subtitle-author">${noticia.usuario.nome}</span></a>
                                     <span class="card-subtitle-date"> - <fmt:formatDate value="${noticia.dataLançamento}" pattern="dd/MM/yyyy"></fmt:formatDate></span>
                                 </div>
                                 <p class="card-text">${noticia.corpo}</p>

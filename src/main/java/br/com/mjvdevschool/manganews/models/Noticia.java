@@ -17,6 +17,6 @@ public class Noticia {
     private Date dataLançamento;
     private Integer visualizacoes;
     private String urlImagem;
-    private Autor autor;
+    private Usuario usuario;
 
 }

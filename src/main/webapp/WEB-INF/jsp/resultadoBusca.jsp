@@ -48,7 +48,7 @@
                             <div class="card-body">
                                 <a href="#"><h5 class="card-title">${noticia.titulo}</h5></a>
                                 <div class="mt-2 mb-2 card-subtitle">
-                                    <a href="#"><span class="card-subtitle-author">${noticia.autor.nome}</span></a>
+                                    <a href="#"><span class="card-subtitle-author">${noticia.usuario.nome}</span></a>
                                     <span class="card-subtitle-date"> - <fmt:formatDate value="${noticia.dataLançamento}" pattern="dd/MM/yyyy"></fmt:formatDate></span>
                                 </div>
                                 <p class="card-text">${noticia.corpo}</p>
