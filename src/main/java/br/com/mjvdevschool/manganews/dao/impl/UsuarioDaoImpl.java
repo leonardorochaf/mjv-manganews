@@ -17,6 +17,20 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
+    public Usuario buscarPorId(Integer id) {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome " +
+                "FROM usuario u JOIN perfil p ON u.perfil_id = p.id WHERE u.id = :id");
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        params.addValue("id", id);
+
+        return template.queryForObject(sql.toString(), params, new UsuarioRowMapper());
+    }
+
+    @Override
     public Usuario buscarPorEmailESenha(String email, String senha) {
         StringBuilder sql = new StringBuilder();
 

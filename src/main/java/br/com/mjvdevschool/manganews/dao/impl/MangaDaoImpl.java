@@ -28,6 +28,20 @@ public class MangaDaoImpl implements MangaDao {
     }
 
     @Override
+    public Manga buscarPorid(Integer id) {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("SELECT * FROM manga WHERE id = :id");
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        params.addValue("id", id);
+
+        return template.queryForObject(sql.toString(), params, new MangaRowMapper());
+    }
+
+
+    @Override
     public List<Manga> buscarTodosQueUsuarioPossui(Integer usuarioId) {
         StringBuilder sql = new StringBuilder();
 
@@ -41,4 +55,35 @@ public class MangaDaoImpl implements MangaDao {
 
         return template.query(sql.toString(), params, new MangaRowMapper());
     }
+
+    @Override
+    public List<Manga> buscarTodosQueUsuarioNaoPossui(Integer usuarioId) {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("SELECT id, nome FROM manga WHERE id NOT IN " +
+                "(SELECT um.manga_id FROM usuario_manga um " +
+                "JOIN usuario u ON um.usuario_id = u.id WHERE um.usuario_id = :usuarioId)");
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        params.addValue("usuarioId", usuarioId);
+
+        return template.query(sql.toString(), params, new MangaRowMapper());
+    }
+
+    @Override
+    public void cadastrarMangaParaUsuario(Integer mangaId, Integer usuarioId) {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("INSERT INTO usuario_manga VALUES (:usuarioId, :mangaId)");
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        params.addValue("usuarioId", usuarioId);
+        params.addValue("mangaId", mangaId);
+
+        template.update(sql.toString(), params);
+    }
+
+
 }

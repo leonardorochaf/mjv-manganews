@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface MangaService {
 
-    List<Manga> buscarTodosQueUsuarioPossui();
+    List<Manga> buscarTodosQueUsuarioPossui(Integer usuarioId);
+
+    List<Manga> buscarTodosQueUsuarioNaoPossui(Integer usuarioId);
+
+    void cadastrarMangaParaUsuario(Integer usuarioId, Manga manga);
 
 }

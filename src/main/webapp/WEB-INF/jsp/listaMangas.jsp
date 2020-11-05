@@ -38,7 +38,14 @@
 </nav>
 
     <div class="container">
-        <c:forEach items="${mangas}" var="manga">
+        <c:forEach items="${mangasPossui}" var="manga">
+            <p style="color: white;">${manga.id}</p>
+            <p style="color: white;">${manga.nome}</p>
+        </c:forEach>
+    </div>
+
+    <div class="container">
+        <c:forEach items="${mangasNaoPossui}" var="manga">
             <p style="color: white;">${manga.id}</p>
             <p style="color: white;">${manga.nome}</p>
         </c:forEach>

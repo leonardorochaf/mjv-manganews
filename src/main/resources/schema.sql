@@ -9,22 +9,23 @@ CREATE TABLE manga (
 );
 
 CREATE TABLE perfil (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NUll,
     perfil_id INT NOT NULL,
     FOREIGN KEY (perfil_id) REFERENCES perfil(id)
 );
 
-CREATE TABLE usuario_manga(
+CREATE TABLE usuario_manga (
     usuario_id INT NOT NULL,
     manga_id INT NOT NULL,
+    PRIMARY KEY (usuario_id, manga_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     FOREIGN KEY (manga_id) REFERENCES manga(id)
 );
@@ -45,13 +46,13 @@ CREATE TABLE noticia (
 INSERT INTO manga(nome)
     VALUES ('testeNomeManga1'), ('testeNomeManga2');
 
-INSERT INTO perfil(nome)
-    VALUES ('ADMIN'), ('CLIENTE');
+INSERT INTO perfil(id, nome)
+    VALUES (1, 'ADMIN'), (2, 'CLIENTE');
 
 INSERT INTO usuario(nome, email, senha, perfil_id)
     VALUES ('Admin', 'admin@admin', 'admin', 1), ('Leonardo Rocha', 'leonardo.rocha@gmail.com', 'leo', 2);
 
-INSERT INTO usuario_manga VALUES (2, 1), (2, 2);
+INSERT INTO usuario_manga VALUES (2, 2);
 
 INSERT INTO noticia(titulo, corpo, dataLancamento, visualizacoes, urlImagem, manga_id, user_id)
     VALUES

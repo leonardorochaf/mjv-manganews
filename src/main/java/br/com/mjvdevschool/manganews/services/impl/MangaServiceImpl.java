@@ -1,11 +1,11 @@
 package br.com.mjvdevschool.manganews.services.impl;
 
 import br.com.mjvdevschool.manganews.dao.MangaDao;
+import br.com.mjvdevschool.manganews.dao.UsuarioDao;
 import br.com.mjvdevschool.manganews.models.Manga;
-import br.com.mjvdevschool.manganews.models.Usuario;
-import br.com.mjvdevschool.manganews.services.LoginService;
 import br.com.mjvdevschool.manganews.services.MangaService;
-import br.com.mjvdevschool.manganews.utils.LoggedUserUtils;
+import br.com.mjvdevschool.manganews.services.UsuarioService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,17 +15,28 @@ public class MangaServiceImpl implements MangaService {
 
     private final MangaDao mangaDao;
 
-    private final LoginService loginService;
+    private final UsuarioDao usuarioDao;
 
-    public MangaServiceImpl(MangaDao mangaDao, LoginService loginService) {
+    public MangaServiceImpl(MangaDao mangaDao, UsuarioDao usuarioDao) {
         this.mangaDao = mangaDao;
-        this.loginService = loginService;
+        this.usuarioDao = usuarioDao;
     }
 
     @Override
-    public List<Manga> buscarTodosQueUsuarioPossui() {
-        Usuario usuarioLogado = loginService.recuperarUsuarioLogado();
+    public List<Manga> buscarTodosQueUsuarioPossui(Integer usuarioId) {
+        return mangaDao.buscarTodosQueUsuarioPossui(usuarioId);
+    }
 
-        return mangaDao.buscarTodosQueUsuarioPossui(usuarioLogado.getId());
+    @Override
+    public List<Manga> buscarTodosQueUsuarioNaoPossui(Integer usuarioId) {
+        return mangaDao.buscarTodosQueUsuarioNaoPossui(usuarioId);
+    }
+
+    @Override
+    public void cadastrarMangaParaUsuario(Integer usuarioId, Manga manga) {
+            usuarioDao.buscarPorId(usuarioId);
+            mangaDao.buscarPorid(manga.getId());
+
+            mangaDao.cadastrarMangaParaUsuario(usuarioId, manga.getId());
     }
 }

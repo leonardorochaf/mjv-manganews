@@ -35,10 +35,7 @@ public class LoginController {
         try {
             Usuario usuario = loginService.autenticaUsuario(usuarioLoginRequest);
 
-            if(usuario.getPerfil().getNome().equals(PerfilEnum.ADMIN.name())) {
-            	return "redirect:/cliente/" +usuario.getId()+ "/noticias";
-            }
-            return "cliente/" + usuario.getId() + "/noticias";
+            return "redirect:/cliente/" + usuario.getId() + "/noticias";
         } catch (EmptyResultDataAccessException e) {
             atrAttributes.addFlashAttribute("mensagemErro", "Email ou senha invalidos");
             return "redirect:/login";

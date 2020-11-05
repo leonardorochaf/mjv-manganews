@@ -9,10 +9,4 @@ public interface LoginService {
 
     void cadastraUsuario(Usuario usuario);
 
-    void salvarUsuarioLogado(Usuario usuario);
-
-    Usuario recuperarUsuarioLogado();
-
-    Boolean verificarUsuarioLogado();
-
 }
