@@ -36,9 +36,9 @@ public class LoginController {
             Usuario usuario = loginService.autenticaUsuario(usuarioLoginRequest);
 
             if(usuario.getPerfil().getNome().equals(PerfilEnum.ADMIN.name())) {
-                return "redirect:/";
+            	return "redirect:/cliente/" +usuario.getId()+ "/noticias";
             }
-            return "redirect:/cliente/noticias";
+            return "cliente/" + usuario.getId() + "/noticias";
         } catch (EmptyResultDataAccessException e) {
             atrAttributes.addFlashAttribute("mensagemErro", "Email ou senha invalidos");
             return "redirect:/login";
@@ -77,7 +77,7 @@ public class LoginController {
         try {
             loginService.cadastraUsuario(usuario);
             atrAttributes.addFlashAttribute("mensagemSucesso", "Cadastro efetudado com sucesso");
-            return "redirect:/login";
+            return "redirect:/cliente/" +usuario.getId()+ "/noticias";
         } catch (BusinessException e) {
             atrAttributes.addFlashAttribute("mensagemErro", e.getMessage());
             return "redirect:/cadastro";
@@ -87,5 +87,10 @@ public class LoginController {
             return "redirect:/cadastro";
         }
     }
+    
+    @GetMapping("/logout")
+	public String logout(RedirectAttributes atributos) {
+    	return "redirect:/login";
+	}
 
 }
