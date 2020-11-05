@@ -6,4 +6,6 @@ public interface UsuarioService {
 
     Usuario buscarPorId(Integer id);
 
+    void cadastrar(Usuario usuario);
+
 }

@@ -25,19 +25,4 @@ public class LoginServiceImpl implements LoginService {
         return usuarioAutenticado;
     }
 
-    @Override
-    public void cadastraUsuario(Usuario usuario) {
-        try {
-            Usuario usurioPorEmail = usuarioDao.buscarPorEmail(usuario.getEmail());
-
-            throw new BusinessException("Email já cadastrado");
-        } catch (EmptyResultDataAccessException e) {
-            Perfil perfil = new Perfil(2, PerfilEnum.CLIENTE.name());
-
-            usuario.setPerfil(perfil);
-
-            usuarioDao.salvar(usuario);
-        }
-    }
-
 }

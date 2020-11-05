@@ -44,50 +44,10 @@ public class LoginController {
             return "redirect:/login";
         }
     }
-
-    @GetMapping("/cadastro")
-    public String cadastro() {
-        return "cadastro";
-    }
-
-    @PostMapping("/cadastrar")
-    public String cadastrar(Usuario usuario, RedirectAttributes atrAttributes) {
-        List<String> mensagens = new ArrayList<>();
-
-        if(StringUtils.isEmpty(usuario.getNome())) {
-            mensagens.add("Nome não informado");
-        }
-
-        if(StringUtils.isEmpty(usuario.getEmail())) {
-            mensagens.add("Email não informado");
-        }
-
-        if(StringUtils.isEmpty(usuario.getSenha())) {
-            mensagens.add("Senha não informada");
-        }
-
-        if(!mensagens.isEmpty()) {
-            atrAttributes.addFlashAttribute("mensagensErroFormulario", mensagens);
-            return "redirect:/cadastro";
-        }
-
-        try {
-            loginService.cadastraUsuario(usuario);
-            atrAttributes.addFlashAttribute("mensagemSucesso", "Cadastro efetudado com sucesso");
-            return "redirect:/cliente/" +usuario.getId()+ "/noticias";
-        } catch (BusinessException e) {
-            atrAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-            return "redirect:/cadastro";
-        }
-        catch (Exception e) {
-            atrAttributes.addFlashAttribute("mensagemErro", "Houve um erro ao tentar cadastrar. Tente novamente");
-            return "redirect:/cadastro";
-        }
-    }
     
     @GetMapping("/logout")
 	public String logout(RedirectAttributes atributos) {
-    	return "redirect:/login";
+    	return "login";
 	}
 
 }
