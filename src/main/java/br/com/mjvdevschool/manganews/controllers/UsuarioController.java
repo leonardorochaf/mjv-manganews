@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("/")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -25,7 +25,7 @@ public class UsuarioController {
 
     @GetMapping("/cadastro")
     public String cadastro() {
-        return "cadastro";
+        return "autenticacao/cadastro";
     }
 
     @PostMapping("/cadastrar")
@@ -52,7 +52,7 @@ public class UsuarioController {
         try {
             usuarioService.cadastrar(usuario);
             atrAttributes.addFlashAttribute("mensagemSucesso", "Cadastro efetudado com sucesso");
-            return "redirect:/cliente/" +usuario.getId()+ "/noticias";
+            return "redirect:/login";
         } catch (BusinessException e) {
             atrAttributes.addFlashAttribute("mensagemErro", e.getMessage());
             return "redirect:/cadastro";

@@ -1,10 +1,8 @@
 package br.com.mjvdevschool.manganews.controllers;
 
-import br.com.mjvdevschool.manganews.exceptions.BusinessException;
+import br.com.mjvdevschool.manganews.exceptions.ResourceNotFoundException;
 import br.com.mjvdevschool.manganews.models.Usuario;
 import br.com.mjvdevschool.manganews.services.LoginService;
-import br.com.mjvdevschool.manganews.utils.PerfilEnum;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,27 +25,42 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "autenticacao/login";
     }
 
     @PostMapping("/autenticar")
     public String autenticar(Usuario usuarioLoginRequest, RedirectAttributes atrAttributes) {
+        List<String> mensagens = new ArrayList<>();
+
+        if(StringUtils.isEmpty(usuarioLoginRequest.getEmail())) {
+            mensagens.add("Email não informado");
+        }
+
+        if(StringUtils.isEmpty(usuarioLoginRequest.getSenha())) {
+            mensagens.add("Senha não informada");
+        }
+
+        if(!mensagens.isEmpty()) {
+            atrAttributes.addFlashAttribute("mensagensErroFormulario", mensagens);
+            return "redirect:/login";
+        }
+
         try {
             Usuario usuario = loginService.autenticaUsuario(usuarioLoginRequest);
 
-            return "redirect:/cliente/" + usuario.getId() + "/noticias";
-        } catch (EmptyResultDataAccessException e) {
-            atrAttributes.addFlashAttribute("mensagemErro", "Email ou senha invalidos");
+            return "redirect:/usuario/" + usuario.getId() + "/noticias";
+        } catch (ResourceNotFoundException e) {
+            atrAttributes.addFlashAttribute("mensagemErro", e.getMessage());
             return "redirect:/login";
         } catch (Exception e) {
-            atrAttributes.addFlashAttribute("mensagemErro", "Houve um erro ao fazer login. Tente novamente");
+            atrAttributes.addFlashAttribute("mensagemErro", "Houve um erro ao fazer login. Tente novamente mais tarde");
             return "redirect:/login";
         }
     }
     
     @GetMapping("/logout")
 	public String logout(RedirectAttributes atributos) {
-    	return "login";
+    	return "redirect:/login";
 	}
 
 }

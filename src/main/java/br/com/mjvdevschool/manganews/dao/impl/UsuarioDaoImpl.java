@@ -3,9 +3,12 @@ package br.com.mjvdevschool.manganews.dao.impl;
 import br.com.mjvdevschool.manganews.dao.UsuarioDao;
 import br.com.mjvdevschool.manganews.models.Usuario;
 import br.com.mjvdevschool.manganews.rowmapper.UsuarioRowMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public class UsuarioDaoImpl implements UsuarioDao {
@@ -17,48 +20,60 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Usuario buscarPorId(Integer id) {
-        StringBuilder sql = new StringBuilder();
+    public Optional<Usuario> buscarPorId(Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder();
 
-        sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome " +
-                "FROM usuario u JOIN perfil p ON u.perfil_id = p.id WHERE u.id = :id");
+            sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome " +
+                    "FROM usuario u JOIN perfil p ON u.perfil_id = p.id WHERE u.id = :id");
 
-        MapSqlParameterSource params = new MapSqlParameterSource();
+            MapSqlParameterSource params = new MapSqlParameterSource();
 
-        params.addValue("id", id);
+            params.addValue("id", id);
 
-        return template.queryForObject(sql.toString(), params, new UsuarioRowMapper());
+            return Optional.ofNullable(template.queryForObject(sql.toString(), params, new UsuarioRowMapper()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Usuario buscarPorEmailESenha(String email, String senha) {
-        StringBuilder sql = new StringBuilder();
+    public Optional<Usuario> buscarPorEmailESenha(String email, String senha) {
+        try {
+            StringBuilder sql = new StringBuilder();
 
-        sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome FROM usuario u " +
-                "JOIN perfil p ON u.perfil_id = p.id " +
-                "WHERE u.email = :email AND u.senha = :senha");
+            sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome FROM usuario u " +
+                    "JOIN perfil p ON u.perfil_id = p.id " +
+                    "WHERE u.email = :email AND u.senha = :senha");
 
-        MapSqlParameterSource params = new MapSqlParameterSource();
+            MapSqlParameterSource params = new MapSqlParameterSource();
 
-        params.addValue("email", email);
-        params.addValue("senha", senha);
+            params.addValue("email", email);
+            params.addValue("senha", senha);
 
-        return template.queryForObject(sql.toString(), params, new UsuarioRowMapper());
+            return Optional.ofNullable(template.queryForObject(sql.toString(), params, new UsuarioRowMapper()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Usuario buscarPorEmail(String email) {
-        StringBuilder sql = new StringBuilder();
+    public Optional<Usuario> buscarPorEmail(String email) {
+        try {
+            StringBuilder sql = new StringBuilder();
 
-        sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome FROM usuario u " +
-                "JOIN perfil p ON u.perfil_id = p.id " +
-                "WHERE u.email = :email");
+            sql.append("SELECT u.id, u.nome, u.email, u.senha, p.id, p.nome FROM usuario u " +
+                    "JOIN perfil p ON u.perfil_id = p.id " +
+                    "WHERE u.email = :email");
 
-        MapSqlParameterSource params = new MapSqlParameterSource();
+            MapSqlParameterSource params = new MapSqlParameterSource();
 
-        params.addValue("email", email);
+            params.addValue("email", email);
 
-        return template.queryForObject(sql.toString(), params, new UsuarioRowMapper());
+            return Optional.ofNullable(template.queryForObject(sql.toString(), params, new UsuarioRowMapper()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

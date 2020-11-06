@@ -2,10 +2,9 @@ package br.com.mjvdevschool.manganews.services.impl;
 
 import br.com.mjvdevschool.manganews.dao.MangaDao;
 import br.com.mjvdevschool.manganews.dao.UsuarioDao;
+import br.com.mjvdevschool.manganews.exceptions.ResourceNotFoundException;
 import br.com.mjvdevschool.manganews.models.Manga;
 import br.com.mjvdevschool.manganews.services.MangaService;
-import br.com.mjvdevschool.manganews.services.UsuarioService;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,9 +33,14 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public void cadastrarMangaParaUsuario(Integer usuarioId, Manga manga) {
-            usuarioDao.buscarPorId(usuarioId);
-            mangaDao.buscarPorid(manga.getId());
+        if(usuarioDao.buscarPorId(usuarioId).isEmpty()) {
+            throw new ResourceNotFoundException("Nenhum usuario encontrado com o id");
+        }
+        if(mangaDao.buscarPorid(manga.getId()).isEmpty()) {
+            throw new ResourceNotFoundException("Nenhum manga encontrado com o id");
+        }
 
-            mangaDao.cadastrarMangaParaUsuario(usuarioId, manga.getId());
+        mangaDao.cadastrarMangaParaUsuario(usuarioId, manga.getId());
     }
+
 }

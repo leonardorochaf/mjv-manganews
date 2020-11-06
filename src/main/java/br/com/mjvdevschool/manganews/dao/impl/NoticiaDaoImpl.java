@@ -41,10 +41,10 @@ public class NoticiaDaoImpl implements NoticiaDao {
     }
 
     @Override
-    public List<Noticia> buscarPorParametro(String parametro) {
-        String sql = "SELECT n.id, n.titulo, n.corpo, n.dataLancamento, n.visualizacoes, n.urlImagem, a.id, a.nome " +
-                "FROM noticia AS n JOIN usuario AS a ON n.user_id = a.id " +
-                "WHERE n.titulo LIKE :parametro OR a.nome LIKE :parametro ORDER BY dataLancamento DESC";
+    public List<Noticia> buscarPorNomeAutorOuTitulo(String parametro) {
+        String sql = "SELECT n.id, n.titulo, n.corpo, n.dataLancamento, n.visualizacoes, n.urlImagem, u.id, u.nome " +
+                "FROM noticia AS n JOIN usuario u ON n.user_id = a.id " +
+                "WHERE n.titulo LIKE :parametro OR u.nome LIKE :parametro ORDER BY dataLancamento DESC";
 
         MapSqlParameterSource param = new MapSqlParameterSource();
 
@@ -52,5 +52,23 @@ public class NoticiaDaoImpl implements NoticiaDao {
 
         return template.query(sql, param, new NoticiaRowMapper());
     }
+
+    @Override
+    public void salvar(Noticia noticia, Integer usuarioId) {
+        String sql = "INSERT INTO noticia (titulo, corpo, dataLançamento, visualizacoes, urlImagem, user_id) " +
+                "VALUES (:titulo, :corpo, :dataLançamento, :visualizacoes, :urlImagem, :user_id)";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        params.addValue("titulo", noticia.getTitulo());
+        params.addValue("corpo", noticia.getCorpo());
+        params.addValue("dataLançamento", noticia.getDataLançamento());
+        params.addValue("visualizacoes", noticia.getVisualizacoes());
+        params.addValue("urlImagem", noticia.getUrlImagem());
+        params.addValue("user_id", usuarioId);
+
+        template.update(sql, params);
+    }
+
 
 }

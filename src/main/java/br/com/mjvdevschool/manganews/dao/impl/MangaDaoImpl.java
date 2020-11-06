@@ -3,11 +3,13 @@ package br.com.mjvdevschool.manganews.dao.impl;
 import br.com.mjvdevschool.manganews.dao.MangaDao;
 import br.com.mjvdevschool.manganews.models.Manga;
 import br.com.mjvdevschool.manganews.rowmapper.MangaRowMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MangaDaoImpl implements MangaDao {
@@ -28,16 +30,20 @@ public class MangaDaoImpl implements MangaDao {
     }
 
     @Override
-    public Manga buscarPorid(Integer id) {
-        StringBuilder sql = new StringBuilder();
+    public Optional<Manga> buscarPorid(Integer id) {
+        try {
+            StringBuilder sql = new StringBuilder();
 
-        sql.append("SELECT * FROM manga WHERE id = :id");
+            sql.append("SELECT * FROM manga WHERE id = :id");
 
-        MapSqlParameterSource params = new MapSqlParameterSource();
+            MapSqlParameterSource params = new MapSqlParameterSource();
 
-        params.addValue("id", id);
+            params.addValue("id", id);
 
-        return template.queryForObject(sql.toString(), params, new MangaRowMapper());
+            return Optional.ofNullable(template.queryForObject(sql.toString(), params, new MangaRowMapper()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
 

@@ -25,6 +25,17 @@
 
     <div class="container mt-4">
 
+        <c:if test='${not empty mensagensErroFormulario}'>
+            <c:forEach items="${mensagensErroFormulario}" var="mensagem">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <c:out value="${mensagem}" />
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </c:forEach>
+        </c:if>
+
         <c:if test='${not empty mensagemErro}'>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <c:out value="${mensagemErro}" />
@@ -46,11 +57,11 @@
         <form action="/autenticar" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="<c:out value="${inputValues.email}"/>">
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="<c:out value="${inputValues.email}"/>" required>
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" value="<c:out value="${inputValues.senha}"/>">
+                <input type="password" class="form-control" id="senha" name="senha" value="<c:out value="${inputValues.senha}"/>" required>
 
             </div>
             <button type="submit" class="btn btn-light">Enviar</button>

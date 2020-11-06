@@ -17,25 +17,25 @@
 </head>
 <body>
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a href="/cliente/noticias" type="button" class="navbar-brand">MangáNews</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a href="/usuario/<c:out value="${usuarioLogado.id}"/>/noticias" type="button" class="navbar-brand">MangáNews</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/cliente/noticias">Notícias</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/cliente/meusmangas">Meus mangás</a>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/usuario/<c:out value="${usuarioLogado.id}"/>/noticias">Notícias</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/usuario/<c:out value="${usuarioLogado.id}"/>/meusmangas">Meus mangás</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="container">
         <c:forEach items="${mangasPossui}" var="manga">

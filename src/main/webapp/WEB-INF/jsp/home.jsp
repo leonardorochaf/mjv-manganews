@@ -18,7 +18,7 @@
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark">
         <div class="container">
-            <a href="/cliente/<c:out value="${usuarioLogado.id}"/>/noticias" type="button" class="navbar-brand">MangáNews</a>
+            <a href="/usuario/<c:out value="${usuarioLogado.id}"/>/noticias" type="button" class="navbar-brand">MangáNews</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -26,16 +26,19 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/cliente/<c:out value="${usuarioLogado.id}"/>/noticias">Notícias</a>
+                        <a class="nav-link" href="/usuario/<c:out value="${usuarioLogado.id}"/>/noticias">Notícias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cliente/<c:out value="${usuarioLogado.id}"/>/meusmangas">Meus mangás</a>
+                        <a class="nav-link" href="/usuario/<c:out value="${usuarioLogado.id}"/>/meusmangas">Meus mangás</a>
                     </li>
                     <c:if test="${usuarioLogado.perfil.nome == 'ADMIN'}">
                         <li class="nav-item">
                             <a class="nav-link" href="#">Área Admin</a>
                         </li>
                     </c:if>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="busca" method="get">
                     <input class="form-control mr-sm-2" type="search" placeholder="Procurar notícias" aria-label="Search" name="parametro" required>

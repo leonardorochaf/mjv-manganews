@@ -10,6 +10,8 @@ public interface NoticiaDao {
 
     List<Noticia> buscarMaisVistos(int limit);
 
-    List<Noticia> buscarPorParametro(String parametro);
+    List<Noticia> buscarPorNomeAutorOuTitulo(String parametro);
+
+    void salvar(Noticia noticia, Integer usuarioId);
 
 }

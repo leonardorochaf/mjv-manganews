@@ -2,12 +2,14 @@ package br.com.mjvdevschool.manganews.services.impl;
 
 import br.com.mjvdevschool.manganews.dao.UsuarioDao;
 import br.com.mjvdevschool.manganews.exceptions.BusinessException;
+import br.com.mjvdevschool.manganews.exceptions.ResourceNotFoundException;
 import br.com.mjvdevschool.manganews.models.Perfil;
 import br.com.mjvdevschool.manganews.models.Usuario;
 import br.com.mjvdevschool.manganews.services.UsuarioService;
 import br.com.mjvdevschool.manganews.utils.PerfilEnum;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -20,21 +22,27 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario buscarPorId(Integer id) {
-        return usuarioDao.buscarPorId(id);
+        Optional<Usuario> usuarioPorId = usuarioDao.buscarPorId(id);
+
+        if(usuarioPorId.isEmpty()) {
+            throw new ResourceNotFoundException("Usuario não encontrado com id informado");
+        }
+
+        return usuarioPorId.get();
     }
 
     @Override
     public void cadastrar(Usuario usuario) {
-        try {
-            usuarioDao.buscarPorEmail(usuario.getEmail());
+        Optional<Usuario> usuarioPorEmail = usuarioDao.buscarPorEmail(usuario.getEmail());
 
+        if(usuarioPorEmail.isPresent()) {
             throw new BusinessException("Email já cadastrado");
-        } catch (EmptyResultDataAccessException e) {
-            Perfil perfil = new Perfil(2, PerfilEnum.CLIENTE.name());
-
-            usuario.setPerfil(perfil);
-
-            usuarioDao.salvar(usuario);
         }
+
+        Perfil perfil = new Perfil(2, PerfilEnum.CLIENTE.name());
+
+        usuario.setPerfil(perfil);
+        usuarioDao.salvar(usuario);
     }
+
 }

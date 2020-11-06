@@ -12,4 +12,6 @@ public interface NoticiaService {
 
     List<Noticia> buscarPorParametro(String parametro);
 
+    void cadastrar(Noticia noticia, Integer usuarioId);
+
 }
